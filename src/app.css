@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+	--bg: #0a0a0a;
+	--fg: #f0eee6;
+	--accent: #c6ff00;
+	--muted: #b8b4aa;
+	--grid-line: rgba(240, 238, 230, 0.12);
+	--border-strong: rgba(240, 238, 230, 0.25);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	min-height: 100%;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+}
+
+a {
+	color: inherit;
+}
+
+.section-label {
+	font-size: 0.7rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.grid-lines {
+	background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px);
+	background-size: calc(100% / 12) 1px;
+}
+
+.surface {
+	border: 1px solid var(--border-strong);
+	background: rgba(255, 255, 255, 0.01);
+}
+
+.noise-overlay {
+	position: fixed;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+	pointer-events: none;
+	mix-blend-mode: soft-light;
+	opacity: 0.7;
+	z-index: 40;
+}
+
+.reveal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: transform 600ms ease, opacity 500ms ease;
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.glitch-text {
+	position: relative;
+	display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0;
+}
+
+.glitch-text::before {
+	color: #00f0ff;
+	transform: translate(-1px, 0);
+}
+
+.glitch-text::after {
+	color: #ff00c8;
+	transform: translate(1px, 0);
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after,
+.glitch-text.is-active::before,
+.glitch-text.is-active::after {
+	opacity: 0.75;
+	animation: glitch-jitter 260ms steps(2, end) infinite;
+}
+
+@keyframes glitch-jitter {
+	0% {
+		transform: translate(-1px, 0);
+	}
+	25% {
+		transform: translate(2px, -1px);
+	}
+	50% {
+		transform: translate(-2px, 1px);
+	}
+	100% {
+		transform: translate(1px, 0);
+	}
+}
+
+@keyframes marquee-scroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}

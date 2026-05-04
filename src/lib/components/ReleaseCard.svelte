@@ -39,7 +39,7 @@
 			<div>
 				<h3 use:scramble class="text-lg font-bold uppercase tracking-[0.1em]">{release.title}</h3>
 				<p class="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
-					{release.year}{release.label ? ` // ${release.label}` : ''}
+					{release.releaseDate}{release.label ? ` // ${release.label}` : ''}
 				</p>
 			</div>
 			<span class="text-xs uppercase tracking-[0.2em] text-[var(--accent)]">{expanded ? 'Close' : 'Open'}</span>

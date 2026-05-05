@@ -7,6 +7,7 @@
 	let blendFrom = $state(0);
 	let blendTo = $state(0);
 	let blendAmount = $state(0);
+	let activePlayerIndex = $state(0);
 	let socialLinks = [
 		{ label: 'Instagram', href: 'https://www.instagram.com/_indent' },
 		{ label: 'SoundCloud', href: 'https://soundcloud.com/indent_uk' },
@@ -20,6 +21,10 @@
 	function embedUrl(index: number) {
 		const item = releases[index];
 		return `https://bandcamp.com/EmbeddedPlayer/${item.bandcampEmbed.type}=${item.bandcampEmbed.id}/size=large/bgcol=0a0a0a/linkcol=c6ff00/artwork=small/transparent=true/`;
+	}
+
+	function setActivePlayer(index: number) {
+		activePlayerIndex = index;
 	}
 
 	function clamp(value: number, min: number, max: number) {
@@ -126,7 +131,7 @@
 		</div>
 	</section>
 
-	<section class="px-6 pt-10 pb-20 md:px-10 md:pt-16 md:pb-28">
+	<section class="px-6 pt-10 pb-44 md:px-10 md:pt-16 md:pb-50">
 		<div class="mx-auto mb-14 max-w-6xl text-center md:mb-20">
 			<h2 class="text-3xl font-bold uppercase tracking-[0.22em] md:text-4xl">Releases</h2>
 		</div>
@@ -174,8 +179,8 @@
 								{/if}
 							</div>
 
-							{#if activeIndex === index}
-								<div class="mt-5 border-t border-[var(--border-strong)] pt-5">
+							<div class="mt-5 border-t border-[var(--border-strong)] pt-5">
+								{#if activePlayerIndex === index}
 									<iframe
 										title={`${release.title} Bandcamp player`}
 										class="h-[120px] w-full border-0"
@@ -184,8 +189,21 @@
 										seamless
 									>
 									</iframe>
-								</div>
-							{/if}
+								{:else}
+									<div class="h-[120px] border border-[var(--border-strong)]">
+										<button
+											type="button"
+											class="flex h-full w-full items-center justify-center gap-3 bg-white/5 text-[var(--fg)] transition hover:bg-white/15"
+											onclick={() => setActivePlayer(index)}
+										>
+											<span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--fg)]">
+												▶
+											</span>
+											<span class="text-xs uppercase tracking-[0.18em]">Listen</span>
+										</button>
+									</div>
+								{/if}
+							</div>
 						</div>
 					</div>
 				</article>
